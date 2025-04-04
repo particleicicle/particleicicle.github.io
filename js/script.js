@@ -167,17 +167,5 @@ function startCountdown() {
     const interval = setInterval(update, 1000);
 }
 
-// Attempt to fetch the release timestamp from the text file
-fetch("https://files.deltarune.com/is-it-ready-yet.txt")
-    .then(res => res.text())
-    .then(text => {
-        const trimmed = text.trim();
-        if(trimmed.length > 0)
-            targetTime = new Date(trimmed);
-    })
-    .catch(err => {
-        console.error("Failed to fetch countdown time:", err);
-});
-
 startCountdown();
 
