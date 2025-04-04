@@ -10,20 +10,20 @@ const marqueeText = document.getElementById('newsOfTheWorld');
 
 
 const who = [
-    "A doctor", "An engineer", "A teacher", "An artist", "A baker", 
-    "A lawyer", "An athlete", "A writer", "A dancer", "An accountant", 
-    "A musician", "A scientist", "A nurse", "A chef", "A librarian", 
-    "A farmer", "An actor", "A carpenter", "A singer", "A firefighter", 
-    "A mechanic", "A photographer", "A designer", "A coach", "A poet", 
-    "A magician", "A sailor", "A zookeeper", "An archaeologist", "A detective", 
-    "A philosopher", "An astronaut", "A judge", "A janitor", "A pilot", 
-    "A soldier", "A journalist", "A scientist", "A poet", "A plumber", 
-    "A bodyguard", "A tailor", "A sculptor", "A builder", "A hairdresser", 
-    "An architect", "A programmer", "A researcher", "A shopkeeper", "A clown", 
-    "A bus driver", "An inventor", "A dentist", "A tattoo artist", "A bodyguard", 
-    "A politician", "A construction worker", "A truck driver", "A therapist", 
-    "A fashion designer", "A chemist", "A personal trainer", "A farmer", 
-    "A surgeon", "A waiter", "A cleaner", "A librarian"
+    "a doctor", "an engineer", "a teacher", "an artist", "a baker", 
+    "a lawyer", "an athlete", "a writer", "a dancer", "an accountant", 
+    "a musician", "a scientist", "a nurse", "a chef", "a librarian", 
+    "a farmer", "an actor", "a carpenter", "a singer", "a firefighter", 
+    "a mechanic", "a photographer", "a designer", "a coach", "a poet", 
+    "a magician", "a sailor", "a zookeeper", "an archaeologist", "a detective", 
+    "a philosopher", "an astronaut", "a judge", "a janitor", "a pilot", 
+    "a soldier", "a journalist", "a scientist", "a poet", "a plumber", 
+    "a bodyguard", "a tailor", "a sculptor", "a builder", "a hairdresser", 
+    "an architect", "a programmer", "a researcher", "a shopkeeper", "a clown", 
+    "a bus driver", "an inventor", "a dentist", "a tattoo artist", "a bodyguard", 
+    "a politician", "a construction worker", "a truck driver", "a therapist", 
+    "a fashion designer", "a chemist", "a personal trainer", "a farmer", 
+    "a surgeon", "a waiter", "a cleaner", "a librarian"
 ];
 
 
@@ -50,7 +50,11 @@ const what = [
     "murdered",
     "kicked a child",
     "set up a pyramid scheme",
-    "tried to end the world"
+    "tried to end the world",
+    "committed tax fraud",
+    "built a nuclear device",
+    "accidentally won a hot dog eating contest",
+    "invented a perpetual motion machine"
 ];
 
 
@@ -70,8 +74,7 @@ const where = [
     "on the street", "in a castle", "at a hospital", "at an airport", 
     "in a shopping mall", "on a farm", "in an alley", "on a pier", 
     "in a tower", "at a railway station", "on a hill", "at a wedding reception", 
-    "in an amusement park", "on a riverbank", "at a public square", 
-    
+    "in an amusement park", "on a riverbank", "at a public square",    
     "in Canada", "in Japan", "in Brazil", "in Germany", "in Australia", 
     "in France", "in Italy", "in India", "in the United States", 
     "in Spain", "in Mexico", "in South Africa", "in Argentina", "in China", 
@@ -86,8 +89,6 @@ const where = [
     "in Ukraine", "in Qatar", "in Kuwait", "in Egypt", "in Jordan", 
     "in Lebanon", "in Tunisia", "in Sri Lanka", "in Bangladesh", "in Nepal",
     "in Iran"
-
-
 ];
 
   
@@ -96,12 +97,8 @@ function generateRandomMessage() {
     const randomWho = who[getRandomInt(who.length)];
     const randomWhat = what[getRandomInt(what.length)];
     const randomWhere = where[getRandomInt(where.length)];
-    msg = getDate() + `, ${randomWho} ${randomWhat} ${randomWhere}.`;
-
-    return msg; /*+ ", " + messages[Math.floor(Math.random() * messages.length)]*/;
+    return getDate() + `, ${randomWho} ${randomWhat} ${randomWhere}.`;
 }
-
-const locale = navigator.language;
 
 const options = {
     weekday: "long",
@@ -113,16 +110,74 @@ const options = {
     hour12: false      
 };
 
-function getDate(){
-    const now = new Date();
-    return now.toLocaleString(locale, options);
-}
+const getDate = () => new Date().toLocaleString(navigator.language, options);
 
 
-function updateMarqueeText() {
+const animateMarquee = () => {
+    marqueeText.classList.remove("animate");
+    // Force reflow to restart the animation
+    void marqueeText.offsetWidth;
+    marqueeText.classList.add("animate");
     marqueeText.textContent = generateRandomMessage();
+};
+
+const scheduleNextAnimation = () => {
+    const delay = Math.random() * 60000;
+    setTimeout(animateMarquee, delay);
+};
+
+marqueeText.addEventListener("animationend", scheduleNextAnimation);
+
+animateMarquee();
+
+//DELTARUNE timer
+
+const countdownElement = {
+    days: document.getElementById("days"),
+    hours: document.getElementById("hours"),
+    minutes: document.getElementById("minutes"),
+    seconds: document.getElementById("seconds")
+};
+  
+let targetTime = new Date("2025-06-05T00:00:00-04:00");
+
+function startCountdown() {
+    const update = () => {
+        const now = new Date();
+        const diff = targetTime - now;
+
+        if (diff <= 0) {
+            clearInterval(interval);
+            document.getElementById("countdown").textContent = "DELTARUNE TODAY!!!";
+            return;
+        }
+
+        const seconds = Math.floor((diff / 1000) % 60);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+        const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+
+        countdownElement.days.textContent = days;
+        countdownElement.hours.textContent = String(hours).padStart(2, "0");
+        countdownElement.minutes.textContent = String(minutes).padStart(2, "0");
+        countdownElement.seconds.textContent = String(seconds).padStart(2, "0");
+    };
+
+    update(); // run immediately so you don’t wait a full second
+    const interval = setInterval(update, 1000);
 }
 
-updateMarqueeText();
+// Attempt to fetch the release timestamp from the text file
+fetch("https://files.deltarune.com/is-it-ready-yet.txt")
+    .then(res => res.text())
+    .then(text => {
+        const trimmed = text.trim();
+        if(trimmed.length > 0)
+            targetTime = new Date(trimmed);
+    })
+    .catch(err => {
+        console.error("Failed to fetch countdown time:", err);
+});
 
-marqueeText.addEventListener('animationiteration', updateMarqueeText);
+startCountdown();
+
