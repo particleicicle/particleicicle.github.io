@@ -1,7 +1,7 @@
 body{
     margin: auto;
     padding: 0;
-
+    background: black;
     font-family: "Poppins", serif;
 }
 
@@ -145,7 +145,24 @@ nav{
 
 #countdown{
     margin-top: 10px;
-    padding-bottom: 80px;
+    padding-bottom: 20px;
     font-size: 1.5em;
 }
 
+footer{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.fade-out {
+    transition: opacity 1s ease-out;
+    opacity: 0;
+}
+
+.cr{
+    font-size: 0.25em;
+    color: gray;
+    margin: 0;
+    font-family:  Arial, Helvetica, sans-serif;
+}

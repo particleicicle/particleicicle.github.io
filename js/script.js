@@ -169,3 +169,25 @@ function startCountdown() {
 
 startCountdown();
 
+if(getRandomInt(1000) == 0){
+    let goAway = false;
+
+    const img = document.createElement("img");
+    img.src = "./img/gaster.gif";
+    const deltarune = document.getElementById("DELTARUNE");
+    deltarune.insertBefore(img, deltarune.getElementsByClassName("cr")[0]);
+    img.onclick = () => {
+        if(!goAway){
+            const audio = document.createElement("audio");
+            audio.src = "./snd/snd_mysterygo.wav";
+            audio.volume = 0.25;
+            audio.play();
+            img.classList.add("fade-out");
+            setTimeout(() => {
+                img.style.display = 'none';
+                deltarune.removeChild(img);
+            }, 1000);
+            goAway = true;
+        }
+    };
+}
