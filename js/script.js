@@ -146,9 +146,17 @@ function startCountdown() {
         const now = new Date();
         const diff = targetTime - now;
 
-        if (diff <= 0) {
+        if (diff <= 0) {         
             clearInterval(interval);
-            document.getElementById("countdown").textContent = "DELTARUNE TODAY!!!";
+
+            const dayInMilliseconds = 86400000;
+            if(diff < -dayInMilliseconds)
+                document.getElementById("countdown").textContent = "DELTARUNE YESTERDAY!!!";
+            else if(diff < -(dayInMilliseconds * 2))
+                document.getElementById("countdown").textContent = "DELTARUNE HOWEVER MANY DAYS AGO!!!";
+            else 
+                document.getElementById("countdown").textContent = "DELTARUNE TODAY!!!";
+            
             return;
         }
 
