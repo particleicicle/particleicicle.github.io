@@ -94,6 +94,7 @@ nav{
 
 .you{
     color: black;
+    -webkit-text-stroke: 1px lightgray;
     padding-right: 3px;
 }
 .tube{

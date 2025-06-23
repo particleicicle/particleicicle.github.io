@@ -91,15 +91,6 @@ const where = [
     "in Iran"
 ];
 
-  
-
-function generateRandomMessage() {
-    const randomWho = who[getRandomInt(who.length)];
-    const randomWhat = what[getRandomInt(what.length)];
-    const randomWhere = where[getRandomInt(where.length)];
-    return getDate() + `, ${randomWho} ${randomWhat} ${randomWhere}.`;
-}
-
 const options = {
     weekday: "long",
     day: "numeric",
@@ -110,8 +101,12 @@ const options = {
     hour12: false      
 };
 
-const getDate = () => new Date().toLocaleString(navigator.language, options);
-
+function generateRandomMessage() {
+    const randomWho = who[getRandomInt(who.length)];
+    const randomWhat = what[getRandomInt(what.length)];
+    const randomWhere = where[getRandomInt(where.length)];
+    return (new Date().toLocaleString(navigator.language, options)) + `, ${randomWho} ${randomWhat} ${randomWhere}.`;
+}
 
 const animateMarquee = () => {
     marqueeText.classList.remove("animate");
@@ -131,7 +126,7 @@ marqueeText.addEventListener("animationend", scheduleNextAnimation);
 animateMarquee();
 
 //DELTARUNE timer
-
+/*
 const countdownElement = {
     days: document.getElementById("days"),
     hours: document.getElementById("hours"),
@@ -143,20 +138,20 @@ let targetTime = new Date("2025-06-05T00:00:00-04:00");
 
 function startCountdown() {
     const update = () => {
-        const now = new Date();
-        const diff = targetTime - now;
+        const diff = targetTime - new Date();
 
         if (diff <= 0) {         
             clearInterval(interval);
 
             const dayInMilliseconds = 86400000;
+            
             if(diff < -dayInMilliseconds)
                 document.getElementById("countdown").textContent = "DELTARUNE YESTERDAY!!!";
             else if(diff < -(dayInMilliseconds * 2))
                 document.getElementById("countdown").textContent = "DELTARUNE HOWEVER MANY DAYS AGO!!!";
             else 
                 document.getElementById("countdown").textContent = "DELTARUNE TODAY!!!";
-            
+
             return;
         }
 
@@ -171,8 +166,8 @@ function startCountdown() {
         countdownElement.seconds.textContent = String(seconds).padStart(2, "0");
     };
 
-    update(); // run immediately so you don’t wait a full second
     const interval = setInterval(update, 1000);
+    update(); // run immediately so you don’t wait a full second  
 }
 
 startCountdown();
@@ -199,3 +194,4 @@ if(getRandomInt(1000) == 0){
         }
     };
 }
+*/
